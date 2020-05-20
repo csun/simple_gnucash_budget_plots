@@ -7,6 +7,7 @@ import os.path
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
+import piecash
 import re
 
 from piecash import open_book
@@ -198,12 +199,19 @@ def main():
               'budget for the account with the corresponding index'))
     parser.add_argument('--ignored_accounts', type=str, default='Expenses',
         help='Comma-separated list of account names to ignore')
+    # TODO remove this flag when piecash fixes the bug
+    parser.add_argument('--unsupported_table_hotfix', action='store_true',
+        help='Hotfix for unsupported table versions error')
     args = parser.parse_args()
 
     global global_ignored_accounts
     global_ignored_accounts = set(args.ignored_accounts.split(','))
     args.accounts = args.accounts.split(',')
     args.budgets = list(map(float, args.budgets.split(',')))
+
+    if args.unsupported_table_hotfix:
+        piecash.core.session.version_supported['3.0']['Gnucash'] = 3000001
+        piecash.core.session.version_supported['3.0']['splits'] = 5
 
     book = open_book(args.gnucash_file, open_if_lock=True)
 

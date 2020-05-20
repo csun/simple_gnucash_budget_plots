@@ -17,3 +17,5 @@ python budget.py ../gnucash/main.gnucash \
     --accounts="Expenses,Expenses:Food,Expenses:Leisure" \
     --budgets="0,0,0"
 ```
+
+If you are using a version of GnuCash >3.7, you may need to use the `--unsupported_table_hotfix` flag to get this to run (until piecash pushes a release that fixes that bug)
