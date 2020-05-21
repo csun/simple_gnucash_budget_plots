@@ -2,6 +2,13 @@ This script generates a simple budget report for GnuCash accounts. The reports c
 
 ![](sample_plot.png)
 
+# Description
+This script queries a SQLite GnuCash file for a given list of accounts, then plots them in a cumulative manner (so the plot line for Expenses will be its balance plus the sum of all of its child balances, Expenses:Food will be the sum of *its* balance plus child account balances, etc.)
+
+In addition, this script plots a line on each report that shows a target "budget" value. Please note that the concept of a budget as used in this script is quite different from that used by GnuCash. In this script's case, each account has a single floating point budget, representing the target balance of that account each month.
+
+This script will plot a year-to-date graph for each account for each year >= 2020, as well as separate graphs for each month of each plotted year, up to the current month. These can be dumped to a configurable `--output` directory, which defaults to the script directory.
+
 # Setup
 I have only tested this on python 3.8.1, so be warned. I believe it requires python 3.x or newer, but I could be wrong.
 
